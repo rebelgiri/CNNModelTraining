@@ -13,7 +13,7 @@ if _platform == "linux" or _platform == "linux2":
 else:
     SLASH = '\''
 
-SAMPLE = '_Sample'
+SAMPLE = '_homogeneous'
 
 RS = 'rs'
 SL = 'sl'
