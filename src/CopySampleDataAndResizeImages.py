@@ -5,7 +5,7 @@ import sys
 import argparse
 import os
 import shutil
-import cv2
+#import cv2
 import tensorflow as tf
 from pathlib import Path
 
@@ -54,9 +54,13 @@ def main():
                     if not os.path.isdir(sampleDataPath + folderName + SAMPLE + SLASH + labelFolder):
                         os.mkdir(sampleDataPath + folderName + SAMPLE + SLASH + labelFolder)
 
-                    print(path + SLASH + labelFolder + SLASH + file)
+                    originalImagePath = path + SLASH + labelFolder + SLASH + file
 
 
+
+
+
+                    return
 
                  #   sampleDataPath + folderName + SAMPLE + SLASH + labelFolder + file)
                     count = count + 1
