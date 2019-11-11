@@ -5,6 +5,7 @@ import sys
 import argparse
 import os
 import shutil
+import cv2
 import tensorflow as tf
 from pathlib import Path
 
@@ -13,7 +14,7 @@ if _platform == "linux" or _platform == "linux2":
 else:
     SLASH = '\''
 
-SAMPLE = '_homogeneous'
+SAMPLE = '_256x256_homogeneous'
 
 RS = 'rs'
 SL = 'sl'
@@ -29,6 +30,7 @@ def main():
     # parameters
     path = args.data_dir  # Directory path where data is saved
     numberOfSample = args.number_of_samples  # number of samples to be copied
+    resizeShape = args.shape_of_images  # resize image size
 
     splitStringList = path.split(SLASH)
     folderName = splitStringList[-1]
@@ -51,9 +53,11 @@ def main():
                     if not os.path.isdir(sampleDataPath + folderName + SAMPLE + SLASH + labelFolder):
                         os.mkdir(sampleDataPath + folderName + SAMPLE + SLASH + labelFolder)
 
-                    print(path + SLASH + labelFolder + SLASH + file)
-                    shutil.copy(path + SLASH + labelFolder + SLASH + file,
-                                    sampleDataPath + folderName + SAMPLE + SLASH + labelFolder)
+                    originalImagePath = path + SLASH + labelFolder + SLASH + file
+                    originalImage = cv2.imread(originalImagePath)
+                    resizedImage = cv2.resize(originalImage, (resizeShape, resizeShape))
+                    desinationPath = sampleDataPath + folderName + SAMPLE + SLASH + labelFolder + SLASH + file
+                    cv2.imwrite(desinationPath, resizedImage)
                     count = count + 1
 
                     if count == numberOfSample:
@@ -70,6 +74,11 @@ if __name__ == '__main__':
                         type=int,
                         default=100,
                         help='Provides number of sample data has to be taken for sample training.')
+
+    parser.add_argument('--shape_of_images',
+                        type=int,
+                        default=100,
+                        help='Provide the resize image size.')
 
     args = parser.parse_args()
     main()
