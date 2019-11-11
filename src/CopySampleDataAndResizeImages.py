@@ -57,6 +57,7 @@ def main():
                     originalImage = cv2.imread(originalImagePath)
                     resizedImage = cv2.resize(originalImage, (resizeShape, resizeShape))
                     desinationPath = sampleDataPath + folderName + SAMPLE + SLASH + labelFolder + SLASH + file
+                    print(desinationPath)
                     cv2.imwrite(desinationPath, resizedImage)
                     count = count + 1
 
